@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Tic, Tac, Toe</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+</head>
+<body>
+
+    <div id="container">
+
+        <h1>3 en Raya</h1>
+
+        <div id="selectMode">
+            <h2>Selecciona Modo de Juego</h2>
+            <button id="singlePlayer" selected>Un Jugador</button>
+            <button id="multiPlayer">Dos Jugadores</button>
+        </div>
+
+        <div id="form" class="form">
+            <div id="player1" class="selection">
+                <label for="namePlayer1">O</label>
+                <input type="text" id="namePlayer1" maxlength="10" placeholder="Jugador 1">
+            </div>
+
+            <div id="player2" class="selection">
+                <label for="namePlayer2">X</label>
+                <input type="text" id="namePlayer2" maxlength="10" placeholder="Jugador 2">
+                <div id="difficultyAI" class="buttonsDifficulty">
+                    <h3>Elige nivel de joanki.IA</h3>
+                    <button id="easy" selected>Noob</button>
+                    <button id="hard" selected>Dios</button>
+                </div>
+            </div>
+
+            <button id="playNow">¡A Jugar!</button>
+        </div>
+        <div id="winner" hidden></div>
+        <div id="scores">
+            <div id="player1scores" class="score">
+                Jugador 1<br><span>0</span>
+            </div>
+            <div id="ties" class="score">
+                Empates<br><span>0</span>
+            </div>
+            <div id="player2scores" class="score">
+                Jugador 2<br> <span>0</span>
+            </div>
+        </div>
+
+        <div id="gameboard" class="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+
+        <div class="optionButtons">
+            <button id="homeButton">Home</button>
+            <button id="restartButton">Reiniciar</button>
+        </div>
+    </div>
+    <script src='script.js'></script>
+</body>
+</html>    
