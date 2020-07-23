@@ -11,9 +11,14 @@ const playerFactory = (name, marker) => {
 const createGameboard = (() => {
     const gameboard = [];
     let board = document.getElementById('gameboard').children;
-    for (let cell in board) {
-        board[cell].innerText = gameboard[cell] || "";
-    };
+    
+    const render = (gameboard) => {
+        for (let cell in board) {
+            board[cell].innerText = gameboard[cell] || "";
+    }};
+
+    
+    render(gameboard);
 })();
 
 // Create Display
