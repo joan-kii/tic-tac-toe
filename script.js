@@ -20,16 +20,11 @@ const displayController = (() => {
 
     // Inputs
 
-    const getPlayer1 = document.getElementById("namePlayer1");
-    const getPlayer2 = document.getElementById("namePlayer2");
-
     // Functions
 
-    let player1 = playerFactory(getPlayer1.value || "Jugador 1", "O");
-    let player2 = playerFactory(getPlayer2.value || "Jugador 2", "X");
-    console.log(player1.name)
-    console.log(player2.marker)
-    const render = () => {
+    let player1 = playerFactory("Jugador 1", "O");
+    let player2 = playerFactory("Jugador 2", "X");
+   
         for (let tile in createGameboard.board) {
             createGameboard.board[tile].innerText = createGameboard.gameboard[tile] || "";
     }};
