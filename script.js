@@ -44,6 +44,15 @@ const createGameboard = (() => {
 
 const displayController = (() => {
 
+    // Variables
+
+    let move = 1;
+    let player1 = playerFactory("Jugador 1", "O");
+    let player2 = playerFactory("Jugador 2", "X");
+    let scorePlayer1 = 0;
+    let scorePlayer2 = 0;
+    let scoreTie = 0;
+
     // Inputs
 
     for (let cell of createGameboard.board) {
@@ -54,21 +63,16 @@ const displayController = (() => {
         })
     };
     document.getElementById('restartButton').addEventListener("click", restartPlay);
-
-    // Variables
-
-    let move = 1;
-    let player1 = playerFactory("Jugador 1", "O");
-    let player2 = playerFactory("Jugador 2", "X");
-    let scorePlayer1 = 0;
-    let scorePlayer2 = 0;
-    let scoreTie = 0;
+    const renderScore1 = document.getElementById('player1scores');
+    const renderScore2 = document.getElementById('player2scores');
 
     // Functions
 
     const render = () => {
         for (let tile in createGameboard.board) {
             createGameboard.board[tile].innerText = createGameboard.gameboard[tile] || "";
+        renderScore1.innerText = scorePlayer1;
+        renderScore2.innerText = scorePlayer2;
     }};
 
     const updateGameboard = (cellIndex) => {
@@ -94,12 +98,15 @@ const displayController = (() => {
     };
 
     const isWinner = () => {
-        const markerWinner = toggleTurn(move);
+        const markerWinner = toggleTurn(move - 1);
         markerWinner == player1.marker ? gotWinner(player1) : gotWinner(player2);
     };
 
     const gotWinner = (winner) => {
-        
+        winner == player1 ? scorePlayer1++ : scorePlayer2++;
+        createGameboard.gameboard = [];
+        move = 1;
+        render();
     }
     return { move, isWinner }
 })();
