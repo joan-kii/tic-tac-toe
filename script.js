@@ -17,14 +17,17 @@ const createGameboard = (() => {
     function areEqual() {
         const len = arguments.length;
         for (let i = 0; i < len; i++){
-            if (arguments[i] != arguments[i+1] || arguments[i] != arguments[i+2]) {
-                return false
-            }
-            return true;
+            console.log(arguments[i], arguments[i+1], arguments[i+2])
+            if (arguments[i] === arguments[i+1] && arguments[i+1] === arguments[i+2]) {
+                console.log("lol")
+                return true
+            } else {
+                return false;
+            };
         };
     }; 
 
-    const checkWinner = () => {
+    const checkWinner = (gameboard) => {
         if (areEqual(gameboard[0], gameboard[1], gameboard[2]) || 
             areEqual(gameboard[3], gameboard[4], gameboard[5]) || 
             areEqual(gameboard[6], gameboard[7], gameboard[8]) ||
@@ -34,13 +37,15 @@ const createGameboard = (() => {
             areEqual(gameboard[0], gameboard[4], gameboard[8]) ||
             areEqual(gameboard[2], gameboard[4], gameboard[6])) {
                 displayController.isWinner();
+            } else {
+                return
             };
     };
 
     return { gameboard, board, checkWinner }
 })();
 
-// Create Display
+// Create Display Controller
 
 const displayController = (() => {
 
@@ -55,16 +60,10 @@ const displayController = (() => {
 
     // Inputs
 
-    for (let cell of createGameboard.board) {
-        cell.addEventListener('click', function () {
-            if (cell.textContent == "") {
-                updateGameboard(cell.getAttribute('data-index'));
-            };
-        })
-    };
     document.getElementById('restartButton').addEventListener("click", restartPlay);
     const renderScore1 = document.getElementById('player1scores');
     const renderScore2 = document.getElementById('player2scores');
+    const playNow = document.getElementById('playNow').addEventListener("click", startPlay);
 
     // Functions
 
@@ -75,12 +74,23 @@ const displayController = (() => {
         renderScore2.innerText = scorePlayer2;
     }};
 
+    function startPlay() {
+        for (let cell of createGameboard.board) {
+            cell.addEventListener('click', function () {
+            if (cell.textContent == "") {
+                updateGameboard(cell.getAttribute('data-index'));
+                };
+            });
+        };
+    };
+
     const updateGameboard = (cellIndex) => {
         createGameboard.gameboard[cellIndex] = toggleTurn(move);
         move++;
-        render(createGameboard.gameboard);
+        console.log(createGameboard.gameboard)
+        render();
         if (move > 5) {
-            createGameboard.checkWinner();
+            createGameboard.checkWinner(createGameboard.gameboard);
         };
     };
 
@@ -107,6 +117,7 @@ const displayController = (() => {
         createGameboard.gameboard = [];
         move = 1;
         render();
-    }
-    return { move, isWinner }
+    }; 
+
+    return { move, isWinner, updateGameboard }
 })();
