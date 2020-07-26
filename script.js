@@ -16,14 +16,12 @@ const createGameboard = (() => {
 
     function areEqual() {
         const len = arguments.length;
-        for (let i = 0; i < len; i++){
-            console.log(arguments[i], arguments[i+1], arguments[i+2])
-            if (arguments[i] === arguments[i+1] && arguments[i+1] === arguments[i+2]) {
-                console.log("lol")
+        if (arguments[0] != undefined) {
+            if (arguments[0] === arguments[1] && arguments[1] === arguments[2]) {
                 return true
-            } else {
-                return false;
             };
+        } else {
+            return false;
         };
     }; 
 
