@@ -3,68 +3,73 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Tic, Tac, Toe</title>
+    <title>3 en Raya</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
 </head>
 <body>
 
-    <div id="container">
+    <div id="container" class="container">
+        <div id="home" class="home" active>
+            <h1 class="title">3 en Raya</h1>
 
-        <h1>3 en Raya</h1>
-
-        <div id="selectMode">
-            <h2>Selecciona Modo de Juego</h2>
-            <button id="singlePlayer" selected>Un Jugador</button>
-            <button id="multiPlayer">Dos Jugadores</button>
-        </div>
-
-        <div id="form" class="form">
-            <div id="player1" class="selection">
-                <label for="namePlayer1">O</label>
-                <input type="text" id="namePlayer1" maxlength="10" placeholder="Jugador 1">
+            <div class="selectMode">
+                <h2 class="subtitle">Selecciona Modo de Juego</h2>
+                <button id="singlePlayer" selected>Un Jugador</button>
+                <button id="multiPlayer">Dos Jugadores</button>
             </div>
 
-            <div id="player2" class="selection">
-                <label for="namePlayer2">X</label>
-                <input type="text" id="namePlayer2" maxlength="10" placeholder="Jugador 2">
-                <div id="difficultyAI" class="buttonsDifficulty">
-                    <h3>Elige nivel de joanki.IA</h3>
+            <div id="form" class="form">
+                <div id="player1" class="selection">
+                    <label for="namePlayer1">O</label>
+                    <input type="text" id="namePlayer1" maxlength="10" placeholder="Jugador 1">
+                </div>
+
+                <div id="player2" class="selection" hidden>
+                    <label for="namePlayer2">X</label>
+                    <input type="text" id="namePlayer2" maxlength="10" placeholder="Jugador 2">
+                </div>
+                <div id="difficultyAI" class="buttonsDifficulty" active>
+                    <h3 class="titleAI">Elige nivel de kiiBOT</h3>
                     <button id="easy" selected>Noob</button>
                     <button id="hard" selected>Dios</button>
                 </div>
-            </div>
+                </div>
 
-            <button id="playNow">¡A Jugar!</button>
-        </div>
-        <div id="winner" hidden></div>
-        <div id="scores">
-            <div class="score">
-                Jugador 1<br><span id="player1scores">0</span>
-            </div>
-            <div class="score">
-                Empates<br><span id="scoreTies">0</span>
-            </div>
-            <div class="score">
-                Jugador 2<br> <span id="player2scores">0</span>
+                <button id="playNow">¡A Jugar!</button>
             </div>
         </div>
+        <div id="game" class="game" hidden>
+            <div id="winner" class="winner" hidden></div>
+            <div id="scores">
+                <div class="score">
+                    Jugador 1<br><span id="player1scores">0</span>
+                </div>
+                <div class="score">
+                    Empates<br><span id="scoreTies">0</span>
+                </div>
+                <div class="score">
+                    Jugador 2<br> <span id="player2scores">0</span>
+                </div>
+            </div>
 
-        <div id="gameboard" class="board">
-            <div class="cell" data-index="0"></div>
-            <div class="cell" data-index="1"></div>
-            <div class="cell" data-index="2"></div>
-            <div class="cell" data-index="3"></div>
-            <div class="cell" data-index="4"></div>
-            <div class="cell" data-index="5"></div>
-            <div class="cell" data-index="6"></div>
-            <div class="cell" data-index="7"></div>
-            <div class="cell" data-index="8"></div>
-        </div>
+            <div id="gameboard" class="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
 
-        <div class="optionButtons">
-            <button id="homeButton">Home</button>
-            <button id="restartButton">Reiniciar</button>
+            <div class="optionButtons">
+                <button id="homeButton">Home</button>
+                <button id="restartButton">Reiniciar</button>
+            </div>
         </div>
     </div>
     <script src='script.js'></script>
