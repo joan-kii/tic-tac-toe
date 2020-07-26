@@ -61,6 +61,7 @@ const displayController = (() => {
     document.getElementById('restartButton').addEventListener("click", restartPlay);
     const renderScore1 = document.getElementById('player1scores');
     const renderScore2 = document.getElementById('player2scores');
+    const renderScoreTie = document.getElementById('scoreTies');
     const playNow = document.getElementById('playNow').addEventListener("click", startPlay);
 
     // Functions
@@ -70,6 +71,7 @@ const displayController = (() => {
             createGameboard.board[tile].innerText = createGameboard.gameboard[tile] || "";
         renderScore1.innerText = scorePlayer1;
         renderScore2.innerText = scorePlayer2;
+        renderScoreTie.innerText = scoreTie;
     }};
 
     function startPlay() {
@@ -85,11 +87,18 @@ const displayController = (() => {
     const updateGameboard = (cellIndex) => {
         createGameboard.gameboard[cellIndex] = toggleTurn(move);
         move++;
-        console.log(createGameboard.gameboard)
+        console.log(move)
         render();
         if (move > 5) {
             createGameboard.checkWinner(createGameboard.gameboard);
         };
+        if (move === 10) {
+            console.log('lol')
+            createGameboard.gameboard = [];
+            scoreTie++;
+            move = 0;
+            render();
+        }
     };
 
     const toggleTurn = (move) => {
@@ -102,7 +111,7 @@ const displayController = (() => {
         scorePlayer1 = 0;
         scorePlayer2 = 0;
         scoreTie = 0;
-        render()
+        render();
     };
 
     const isWinner = () => {
