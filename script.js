@@ -87,16 +87,14 @@ const displayController = (() => {
     const updateGameboard = (cellIndex) => {
         createGameboard.gameboard[cellIndex] = toggleTurn(move);
         move++;
-        console.log(move)
         render();
         if (move > 5) {
             createGameboard.checkWinner(createGameboard.gameboard);
         };
         if (move === 10) {
-            console.log('lol')
             createGameboard.gameboard = [];
             scoreTie++;
-            move = 0;
+            move = 1;
             render();
         }
     };
