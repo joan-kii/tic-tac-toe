@@ -64,20 +64,29 @@ const displayController = (() => {
     const renderScoreTie = document.getElementById('scoreTies');
     const displayName1 = document.getElementById('displayName1');
     const displayName2 = document.getElementById('displayName2');
+    const homeLayout = document.getElementById('home');
+    const gameLayout = document.getElementById('game');
+    const homeButton = document.getElementById('homeButton').addEventListener("click", goHome);
     const playMode = document.querySelectorAll('.mode');
     const difficultyAI = document.getElementById('difficultyAI');
     const inputPlayer2 = document.getElementById('player2');
+    const kiibotLevel = document.querySelectorAll('.kiiBOT');
     const playNow = document.getElementById('playNow').addEventListener("click", startPlay);
 
     // Functions
 
     playMode.forEach(mode =>
-        mode.addEventListener("click", e => {
-          if (!e.target.hasAttribute("selected")) {
+        mode.addEventListener("click", () => {
             playMode.forEach(mode => mode.toggleAttribute("selected"));
-            difficultyAI.toggleAttribute('active');
-            inputPlayer2.toggleAttribute('active');
-        }}));
+            difficultyAI.toggleAttribute('hidden');
+            inputPlayer2.toggleAttribute('hidden');
+        })
+    );
+
+    kiibotLevel.forEach(level => 
+        level.addEventListener("click", () => {
+            kiibotLevel.forEach(level => level.toggleAttribute('selected'));
+        }));
 
     const render = () => {
         for (let tile in createGameboard.board) {
@@ -90,6 +99,8 @@ const displayController = (() => {
     }};
 
     function startPlay() {
+        homeLayout.toggleAttribute('hidden');
+        gameLayout.toggleAttribute('hidden');
         for (let cell of createGameboard.board) {
             cell.addEventListener('click', function () {
             if (cell.textContent == "") {
@@ -127,6 +138,11 @@ const displayController = (() => {
         render();
     };
 
+    function goHome() {
+        homeLayout.toggleAttribute('hidden');
+        gameLayout.toggleAttribute('hidden');
+        restartPlay();
+    }
     const isWinner = () => {
         const markerWinner = toggleTurn(move - 1);
         markerWinner == player1.marker ? gotWinner(player1) : gotWinner(player2);

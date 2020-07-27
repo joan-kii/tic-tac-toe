@@ -1,6 +1,5 @@
 html {
     height: 100%;
-    width: 100%;
 }
 
 body {
@@ -33,17 +32,22 @@ input {
     height: 30px;
     width: 150px;
     text-indent: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+}
+
+.inputPlayer2 {
+    margin-bottom: 94px;
 }
 
 label {
     font-size: 1.2em;
     margin-top: 5px;
 }
+
 .container {
     background-image: linear-gradient(to top, #764a1d, #b77e37);
     width: 500px;
-    height: 530px;
+    height: 550px;
     margin: 0 auto;
     position: relative;
     top: 120px;
@@ -53,7 +57,7 @@ label {
 }
 
 .title{
-    height: 50px;
+    height: 40px;
     color: #e0e0e0;
     font-size: 1.5em;
     background-color: #36b030;
@@ -95,3 +99,6 @@ label {
 .buttonsDifficulty {
     margin-bottom: 20px;
 }
+
+/* .playButton {
+} */

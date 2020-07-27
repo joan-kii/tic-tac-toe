@@ -14,8 +14,8 @@
         <div id="home" class="home" active>
             <h1 class="title">3 en Raya</h1>
 
-            <h2 class="subtitle">Selecciona Modo de Juego</h2>
             <div id ="selectMode" class="selectMode">
+                <h2 class="subtitle">Selecciona Modo de Juego</h2>
                 <button id="singlePlayer" class="mode" selected>Un Jugador</button>
                 <button id="twoPlayers" class="mode">Dos Jugadores</button>
             </div>
@@ -26,18 +26,18 @@
                     <input type="text" id="namePlayer1" maxlength="10" placeholder="Jugador 1">
                 </div>
 
-                <div id="player2" class="selection">
+                <div id="player2" class="selection" hidden>
                     <label for="namePlayer2">X</label>
-                    <input type="text" id="namePlayer2" maxlength="10" placeholder="Jugador 2">
+                    <input type="text" id="namePlayer2" class="inputPlayer2" maxlength="10" placeholder="Jugador 2">
                 </div>
                 <div id="difficultyAI" class="buttonsDifficulty" active>
-                    <h3 class="titleAI">Elige nivel de kiiBOT</h3>
-                    <button id="easy" selected>Noob</button>
-                    <button id="hard">Dios</button>
+                    <h3 class="titleAI">Elige el nivel de kiiBOT</h3>
+                    <button id="easy" class="kiiBOT" selected>Noob</button>
+                    <button id="hard" class="kiiBOT">Pro</button>
                 </div>
                 </div>
 
-                <button id="playNow">¡A jugar!</button>
+                <button id="playNow" class="playButton">¡A jugar!</button>
             </div>
         </div>
         <div id="game" class="game" hidden>
