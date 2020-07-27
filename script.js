@@ -62,9 +62,22 @@ const displayController = (() => {
     const renderScore1 = document.getElementById('player1scores');
     const renderScore2 = document.getElementById('player2scores');
     const renderScoreTie = document.getElementById('scoreTies');
+    const displayName1 = document.getElementById('displayName1');
+    const displayName2 = document.getElementById('displayName2');
+    const playMode = document.querySelectorAll('.mode');
+    const difficultyAI = document.getElementById('difficultyAI');
+    const inputPlayer2 = document.getElementById('player2');
     const playNow = document.getElementById('playNow').addEventListener("click", startPlay);
 
     // Functions
+
+    playMode.forEach(mode =>
+        mode.addEventListener("click", e => {
+          if (!e.target.hasAttribute("selected")) {
+            playMode.forEach(mode => mode.toggleAttribute("selected"));
+            difficultyAI.toggleAttribute('active');
+            inputPlayer2.toggleAttribute('active');
+        }}));
 
     const render = () => {
         for (let tile in createGameboard.board) {
@@ -72,6 +85,8 @@ const displayController = (() => {
         renderScore1.innerText = scorePlayer1;
         renderScore2.innerText = scorePlayer2;
         renderScoreTie.innerText = scoreTie;
+        displayName1.innerText = player1.name;
+        displayName2.innerText = player2.name;
     }};
 
     function startPlay() {
