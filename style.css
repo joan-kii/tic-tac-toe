@@ -56,7 +56,7 @@ label {
     box-shadow: 0 0 25px 20px rgba(220, 220, 220, 0.5);
 }
 
-.title{
+.title, .displayScores {
     height: 40px;
     color: #e0e0e0;
     font-size: 1.5em;
@@ -83,22 +83,41 @@ label {
     padding: 10px;
 }
 
+.buttonsDifficulty {
+    margin-bottom: 20px;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: 320px;
-    height: 320px;
+    width: 360px;
+    height: 360px;
     border: 1px solid;
+    position: relative;
+    top: 30px;
+    left: 70px;
 }
 
 .cell {
     border: 1px solid;
 }
 
-.buttonsDifficulty {
-    margin-bottom: 20px;
+.displayScores {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1em;
 }
 
-/* .playButton {
-} */
+.score {
+    border: 2px solid #e0e0e0;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+
+.optionButtons {
+    position: relative;
+    top: 55px;
+    left: 10px;
+}
