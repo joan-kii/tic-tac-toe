@@ -47,15 +47,6 @@ const createGameboard = (() => {
 
 const displayController = (() => {
 
-    // Variables
-
-    let move = 1;
-    let player1 = playerFactory("Jugador 1", "O");
-    let player2 = playerFactory("Jugador 2", "X");
-    let scorePlayer1 = 0;
-    let scorePlayer2 = 0;
-    let scoreTie = 0;
-
     // Inputs
 
     document.getElementById('restartButton').addEventListener("click", restartPlay);
@@ -69,9 +60,20 @@ const displayController = (() => {
     const homeButton = document.getElementById('homeButton').addEventListener("click", goHome);
     const playMode = document.querySelectorAll('.mode');
     const difficultyAI = document.getElementById('difficultyAI');
+    const namePlayer1 = document.getElementById('namePlayer1');
+    const namePlayer2 = document.getElementById('namePlayer2');
     const inputPlayer2 = document.getElementById('player2');
     const kiibotLevel = document.querySelectorAll('.kiiBOT');
     const playNow = document.getElementById('playNow').addEventListener("click", startPlay);
+
+    // Variables
+
+    let move = 1;
+    let scorePlayer1 = 0;
+    let scorePlayer2 = 0;
+    let scoreTie = 0;
+    let player1;
+    let player2;
 
     // Functions
 
@@ -91,14 +93,16 @@ const displayController = (() => {
     const render = () => {
         for (let tile in createGameboard.board) {
             createGameboard.board[tile].innerText = createGameboard.gameboard[tile] || "";
+    }};
+
+    function startPlay() {
+        player1 = playerFactory(namePlayer1.value || "Jugador 1", "O");
+        player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
         renderScore1.innerText = scorePlayer1;
         renderScore2.innerText = scorePlayer2;
         renderScoreTie.innerText = scoreTie;
         displayName1.innerText = player1.name;
         displayName2.innerText = player2.name;
-    }};
-
-    function startPlay() {
         homeLayout.toggleAttribute('hidden');
         gameLayout.toggleAttribute('hidden');
         for (let cell of createGameboard.board) {
