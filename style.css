@@ -53,7 +53,7 @@ label {
     top: 120px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 0 25px 20px rgba(220, 220, 220, 0.5);
+    box-shadow: 0  37px 20px -16px rgba(0, 0, 0, 1);
 }
 
 .title, .displayScores {
@@ -105,6 +105,8 @@ label {
     border: 1px solid #36b030;
     background-color: #e0e0e0;
     border-radius: 5px;
+    font-size: 35px;
+    padding: 37px;
 }
 
 .displayScores {
@@ -128,4 +130,16 @@ label {
     position: relative;
     top: 45px;
     left: 10px;
+}
+
+.winner {
+    display: none;
+    font-size: 20px;
+    z-index: 0;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
 }

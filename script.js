@@ -50,6 +50,7 @@ const displayController = (() => {
     // Inputs
 
     document.getElementById('restartButton').addEventListener("click", restartPlay);
+    const scoresDisplay = document.getElementById('scores');
     const renderScore1 = document.getElementById('player1scores');
     const renderScore2 = document.getElementById('player2scores');
     const renderScoreTie = document.getElementById('scoreTies');
@@ -65,6 +66,7 @@ const displayController = (() => {
     const inputPlayer2 = document.getElementById('player2');
     const kiibotLevel = document.querySelectorAll('.kiiBOT');
     const playNow = document.getElementById('playNow').addEventListener("click", startPlay);
+    const message = document.getElementById('winner');
 
     // Variables
 
@@ -91,20 +93,22 @@ const displayController = (() => {
         }));
 
     const render = () => {
+        message.style.display = 'none';
         for (let tile in createGameboard.board) {
             createGameboard.board[tile].innerText = createGameboard.gameboard[tile] || "";
+        renderScore1.innerText = scorePlayer1;
+        renderScore2.innerText = scorePlayer2;
+        renderScoreTie.innerText = scoreTie;
     }};
 
     function startPlay() {
         player1 = playerFactory(namePlayer1.value || "Jugador 1", "O");
         player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
-        renderScore1.innerText = scorePlayer1;
-        renderScore2.innerText = scorePlayer2;
-        renderScoreTie.innerText = scoreTie;
         displayName1.innerText = player1.name;
         displayName2.innerText = player2.name;
-        homeLayout.toggleAttribute('hidden');
         gameLayout.toggleAttribute('hidden');
+        homeLayout.toggleAttribute('hidden');
+        createGameboard.gameboard = [];
         for (let cell of createGameboard.board) {
             cell.addEventListener('click', function () {
             if (cell.textContent == "") {
@@ -146,7 +150,8 @@ const displayController = (() => {
         homeLayout.toggleAttribute('hidden');
         gameLayout.toggleAttribute('hidden');
         restartPlay();
-    }
+    }; 
+
     const isWinner = () => {
         const markerWinner = toggleTurn(move - 1);
         markerWinner == player1.marker ? gotWinner(player1) : gotWinner(player2);
@@ -156,7 +161,10 @@ const displayController = (() => {
         winner == player1 ? scorePlayer1++ : scorePlayer2++;
         createGameboard.gameboard = [];
         move = 1;
-        render();
+        message.innerText = `¡${winner.name} gana!`
+        message.style.display = 'block';
+        setTimeout(render, 2000);
+        r
     }; 
 
     return { move, isWinner, updateGameboard }
