@@ -129,8 +129,11 @@ const displayController = (() => {
             createGameboard.gameboard = [];
             scoreTie++;
             move = 1;
-            render();
-        }
+            message.innerText = `¡Empate!`;
+            message.style.padding = "70px 41%";
+            message.style.display = 'block';
+            setTimeout(render, 2500);
+        }; 
     };
 
     const toggleTurn = (move) => {
@@ -162,9 +165,9 @@ const displayController = (() => {
         createGameboard.gameboard = [];
         move = 1;
         message.innerText = `¡${winner.name} gana!`
+        message.style.padding = "70px 31%";
         message.style.display = 'block';
-        setTimeout(render, 2000);
-        r
+        setTimeout(render, 2500);
     }; 
 
     return { move, isWinner, updateGameboard }

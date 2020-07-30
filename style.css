@@ -17,6 +17,7 @@ button {
     padding: 15px;
     border: 3px solid #36b030;
     border-radius: 5px;
+    transition: all ease-in-out 300ms;
 }
 
 button:hover, button[selected] {
@@ -65,6 +66,7 @@ label {
     border-radius: 10px 10px 0px 0px;
     text-shadow: 2px 2px 4px #000000;
     box-shadow:0px 3px 3px #36b030;
+    margin: 0;
 } 
 
 .selectMode {
@@ -134,8 +136,10 @@ label {
 
 .winner {
     display: none;
-    font-size: 20px;
-    z-index: 0;
+    position: fixed;
+    font-size: 40px;
+    color: white;
+    z-index: 1;
     top: 0px;
     left: 0px;
     height: 100%;
