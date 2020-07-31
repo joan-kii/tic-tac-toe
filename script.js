@@ -110,6 +110,7 @@ const displayController = (() => {
             player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
             modeAI = false;
         };
+
         displayName1.innerText = player1.name;
         displayName2.innerText = player2.name;
         gameLayout.toggleAttribute('hidden');
@@ -118,20 +119,22 @@ const displayController = (() => {
         if (modeAI == false) {
             for (let cell of createGameboard.board) {
                 cell.addEventListener('click', function () {
-                if (cell.textContent == "") {
-                    updateGameboard(cell.getAttribute('data-index'));
-                    };
-                });
-            };
+                        if (cell.textContent == "") {
+                            updateGameboard(cell.getAttribute('data-index'));
+                        };
+                    });
+                };
         } else {
-            /* Continuar movimientos kiiBOT */
-        }
+            kiibotMode();
+        };
     };
-
+            
+                    
     const updateGameboard = (cellIndex) => {
         createGameboard.gameboard[cellIndex] = toggleTurn(move);
         move++;
         render();
+        kiibotMode();
         if (move > 5) {
             createGameboard.checkWinner(createGameboard.gameboard);
         };
@@ -149,6 +152,28 @@ const displayController = (() => {
     const toggleTurn = (move) => {
         return move % 2 != 0 ? player1.marker : player2.marker;
         };
+
+    const kiibotMode = () => {
+        if (toggleTurn(move) == 'X') {
+            let choice = Math.floor(Math.random() * 9);
+            console.log(choice)
+            console.log(move)
+            console.log(createGameboard.gameboard[choice])
+            while (createGameboard.gameboard[choice] != undefined && move < 10) {
+                choice = Math.floor(Math.random() * 9);
+            };
+            updateGameboard(choice);
+        } else if (toggleTurn(move) == 'O') {
+            for (let cell of createGameboard.board) {
+                cell.addEventListener('click', function () {
+                    if (cell.textContent == "") {
+                        updateGameboard(cell.getAttribute('data-index'));
+                    };
+                });
+            };
+        };
+    };
+
 
     function restartPlay() {
         createGameboard.gameboard = [];
