@@ -76,6 +76,7 @@ const displayController = (() => {
     let scoreTie = 0;
     let player1;
     let player2;
+    let modeAI;
 
     // Functions
 
@@ -103,19 +104,28 @@ const displayController = (() => {
 
     function startPlay() {
         player1 = playerFactory(namePlayer1.value || "Jugador 1", "O");
-        player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
+        if (playMode[0].attributes.selected) {
+            player2 = playerFactory('kiiBOT', 'X');
+        } else {
+            player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
+            modeAI = false;
+        };
         displayName1.innerText = player1.name;
         displayName2.innerText = player2.name;
         gameLayout.toggleAttribute('hidden');
         homeLayout.toggleAttribute('hidden');
         createGameboard.gameboard = [];
-        for (let cell of createGameboard.board) {
-            cell.addEventListener('click', function () {
-            if (cell.textContent == "") {
-                updateGameboard(cell.getAttribute('data-index'));
-                };
-            });
-        };
+        if (modeAI == false) {
+            for (let cell of createGameboard.board) {
+                cell.addEventListener('click', function () {
+                if (cell.textContent == "") {
+                    updateGameboard(cell.getAttribute('data-index'));
+                    };
+                });
+            };
+        } else {
+            /* Continuar movimientos kiiBOT */
+        }
     };
 
     const updateGameboard = (cellIndex) => {
