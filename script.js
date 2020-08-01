@@ -31,7 +31,7 @@ const createGameboard = (() => {
             areEqual(gameboard[6], gameboard[7], gameboard[8]) ||
             areEqual(gameboard[0], gameboard[3], gameboard[6]) ||
             areEqual(gameboard[1], gameboard[4], gameboard[7]) ||
-            areEqual(gameboard[2], gameboard[6], gameboard[8]) ||
+            areEqual(gameboard[2], gameboard[5], gameboard[8]) ||
             areEqual(gameboard[0], gameboard[4], gameboard[8]) ||
             areEqual(gameboard[2], gameboard[4], gameboard[6])) {
                 displayController.isWinner();
@@ -106,6 +106,7 @@ const displayController = (() => {
         player1 = playerFactory(namePlayer1.value || "Jugador 1", "O");
         if (playMode[0].attributes.selected) {
             player2 = playerFactory('kiiBOT', 'X');
+            modeAI = true;
         } else {
             player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
             modeAI = false;
@@ -125,6 +126,7 @@ const displayController = (() => {
                     });
                 };
         } else {
+            console.log(modeAI)
             kiibotMode();
         };
     };
@@ -132,9 +134,8 @@ const displayController = (() => {
                     
     const updateGameboard = (cellIndex) => {
         createGameboard.gameboard[cellIndex] = toggleTurn(move);
-        move++;
         render();
-        kiibotMode();
+        move++;
         if (move > 5) {
             createGameboard.checkWinner(createGameboard.gameboard);
         };
@@ -145,8 +146,11 @@ const displayController = (() => {
             message.innerText = `¡Empate!`;
             message.style.padding = "70px 41%";
             message.style.display = 'block';
-            setTimeout(render, 2500);
+            setTimeout(render, 2000);
         }; 
+        if (modeAI) {
+            kiibotMode();
+        };
     };
 
     const toggleTurn = (move) => {
@@ -156,13 +160,10 @@ const displayController = (() => {
     const kiibotMode = () => {
         if (toggleTurn(move) == 'X') {
             let choice = Math.floor(Math.random() * 9);
-            console.log(choice)
-            console.log(move)
-            console.log(createGameboard.gameboard[choice])
             while (createGameboard.gameboard[choice] != undefined && move < 10) {
                 choice = Math.floor(Math.random() * 9);
             };
-            updateGameboard(choice);
+            setTimeout(updateGameboard, 1000, choice);
         } else if (toggleTurn(move) == 'O') {
             for (let cell of createGameboard.board) {
                 cell.addEventListener('click', function () {
@@ -202,7 +203,7 @@ const displayController = (() => {
         message.innerText = `¡${winner.name} gana!`
         message.style.padding = "70px 31%";
         message.style.display = 'block';
-        setTimeout(render, 2500);
+        setTimeout(render, 2000);
     }; 
 
     return { move, isWinner, updateGameboard }
