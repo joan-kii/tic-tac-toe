@@ -77,6 +77,7 @@ const displayController = (() => {
     let player1;
     let player2;
     let modeAI;
+    let kiibot = 'noob';
 
     // Functions
 
@@ -91,6 +92,9 @@ const displayController = (() => {
     kiibotLevel.forEach(level => 
         level.addEventListener("click", () => {
             kiibotLevel.forEach(level => level.toggleAttribute('selected'));
+            if (kiibotLevel[1].attributes.selected) {
+                kiibot = 'pro';
+            };
         }));
 
     const render = () => {
@@ -126,7 +130,6 @@ const displayController = (() => {
                     });
                 };
         } else {
-            console.log(modeAI)
             kiibotMode();
         };
     };
@@ -158,12 +161,16 @@ const displayController = (() => {
         };
 
     const kiibotMode = () => {
-        if (toggleTurn(move) == 'X') {
-            let choice = Math.floor(Math.random() * 9);
+        if (toggleTurn(move) == 'X' && kiibot === 'noob') {
+            let noobChoice = Math.floor(Math.random() * 9);
             while (createGameboard.gameboard[choice] != undefined && move < 10) {
-                choice = Math.floor(Math.random() * 9);
+                noobChoice = Math.floor(Math.random() * 9);
             };
-            setTimeout(updateGameboard, 1000, choice);
+            setTimeout(updateGameboard, 1000, noobChoice);
+        } else if (toggleTurn(move) == 'X' && kiibot === 'pro') {
+            // Continuar aquí
+            let proChoice = minimax(createGameboard.gameboard, );
+           setTimeout(updateGameboard, 1000, proChoice);
         } else if (toggleTurn(move) == 'O') {
             for (let cell of createGameboard.board) {
                 cell.addEventListener('click', function () {
@@ -175,6 +182,9 @@ const displayController = (() => {
         };
     };
 
+    function minimax(gameboard, depth, maximizingPlayer) {
+
+    }
 
     function restartPlay() {
         createGameboard.gameboard = [];
