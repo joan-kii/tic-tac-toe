@@ -163,14 +163,25 @@ const displayController = (() => {
     const kiibotMode = () => {
         if (toggleTurn(move) == 'X' && kiibot === 'noob') {
             let noobChoice = Math.floor(Math.random() * 9);
-            while (createGameboard.gameboard[choice] != undefined && move < 10) {
+            while (createGameboard.gameboard[noobChoice] != undefined && move < 10) {
                 noobChoice = Math.floor(Math.random() * 9);
             };
             setTimeout(updateGameboard, 1000, noobChoice);
         } else if (toggleTurn(move) == 'X' && kiibot === 'pro') {
-            // Continuar aquí
-            let proChoice = minimax(createGameboard.gameboard, );
-           setTimeout(updateGameboard, 1000, proChoice);
+            let bestScore = -Infinity;
+            let nextMove;
+            for (let i = 0; i < 9; i++) {
+                if (createGameboard.gameboard[i] === undefined) {
+                    createGameboard.gameboard[i] = 'X';
+                    let proChoice = minimax(createGameboard.gameboard);
+                    createGameboard.gameboard[i] = undefined;
+                    if (proChoice > bestScore) {
+                        bestScore = proChoice;
+                        nextMove = i;
+                    }
+                };
+            }
+           setTimeout(updateGameboard, 1000, nextMove);
         } else if (toggleTurn(move) == 'O') {
             for (let cell of createGameboard.board) {
                 cell.addEventListener('click', function () {
@@ -182,8 +193,8 @@ const displayController = (() => {
         };
     };
 
-    function minimax(gameboard, depth, maximizingPlayer) {
-
+    function minimax(gameboard) {
+        return 1;
     }
 
     function restartPlay() {
