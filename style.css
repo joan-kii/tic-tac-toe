@@ -4,6 +4,7 @@ html {
 
 body {
     background-image: linear-gradient(to top right, #75bff0, #035381);
+    background-attachment: fixed;
     font-family: 'Press Start 2P';
     color: #252525;
     text-shadow: 2px 2px 4px #aaa;
