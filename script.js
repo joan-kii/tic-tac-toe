@@ -11,21 +11,18 @@ const createGameboard = (() => {
     // Variables
     const gameboard = [];
     let board = document.getElementById('gameboard').children;
+    let winner = null;
 
     // Functions 
 
-    function areEqual() {
-        const len = arguments.length;
-        if (arguments[0] != undefined) {
-            if (arguments[0] === arguments[1] && arguments[1] === arguments[2]) {
-                return true
-            };
-        } else {
-            return false;
+    function areEqual(a, b, c) {
+        if (a === b && b == c && a != undefined) {
+            winner = a;
+            return true
         };
     }; 
 
-    const checkWinner = (gameboard) => {
+    const checkWinner = (gameboard, test) => {
         if (areEqual(gameboard[0], gameboard[1], gameboard[2]) || 
             areEqual(gameboard[3], gameboard[4], gameboard[5]) || 
             areEqual(gameboard[6], gameboard[7], gameboard[8]) ||
@@ -34,12 +31,22 @@ const createGameboard = (() => {
             areEqual(gameboard[2], gameboard[5], gameboard[8]) ||
             areEqual(gameboard[0], gameboard[4], gameboard[8]) ||
             areEqual(gameboard[2], gameboard[4], gameboard[6])) {
-                displayController.isWinner();
+                if (!test) {
+                    displayController.gotWinner(winner);
+                } else if (test) {
+                    return winner
+                };
+        } else if (gameboard.length === 9 && !gameboard.includes(undefined)) {
+            winner = 'tie';
+            if (!test) {
+                displayController.gotWinner(winner);
             } else {
-                return
+                return winner
             };
+        } else {
+            return false
+        };
     };
-
     return { gameboard, board, checkWinner }
 })();
 
@@ -78,6 +85,11 @@ const displayController = (() => {
     let player2;
     let modeAI;
     let kiibot = 'noob';
+    let minimaxScores = {
+        X: 10,
+        O: -10,
+        tie: 0
+    };
 
     // Functions
 
@@ -94,6 +106,8 @@ const displayController = (() => {
             kiibotLevel.forEach(level => level.toggleAttribute('selected'));
             if (kiibotLevel[1].attributes.selected) {
                 kiibot = 'pro';
+            } else {
+                kiibot = 'noob';
             };
         }));
 
@@ -115,13 +129,12 @@ const displayController = (() => {
             player2 = playerFactory(namePlayer2.value || "Jugador 2", "X");
             modeAI = false;
         };
-
         displayName1.innerText = player1.name;
         displayName2.innerText = player2.name;
         gameLayout.toggleAttribute('hidden');
         homeLayout.toggleAttribute('hidden');
         createGameboard.gameboard = [];
-        if (modeAI == false) {
+        if (modeAI === false) {
             for (let cell of createGameboard.board) {
                 cell.addEventListener('click', function () {
                         if (cell.textContent == "") {
@@ -129,30 +142,20 @@ const displayController = (() => {
                         };
                     });
                 };
-        } else {
-            kiibotMode();
+        } else if (modeAI === true) {
+            kiibotMode(); 
         };
     };
             
-                    
     const updateGameboard = (cellIndex) => {
         createGameboard.gameboard[cellIndex] = toggleTurn(move);
         render();
         move++;
         if (move > 5) {
-            createGameboard.checkWinner(createGameboard.gameboard);
+            createGameboard.checkWinner(createGameboard.gameboard, false);
         };
-        if (move === 10) {
-            createGameboard.gameboard = [];
-            scoreTie++;
-            move = 1;
-            message.innerText = `¡Empate!`;
-            message.style.padding = "70px 41%";
-            message.style.display = 'block';
-            setTimeout(render, 2000);
-        }; 
         if (modeAI) {
-            kiibotMode();
+            setTimeout(kiibotMode, 500);
         };
     };
 
@@ -161,28 +164,29 @@ const displayController = (() => {
         };
 
     const kiibotMode = () => {
-        if (toggleTurn(move) == 'X' && kiibot === 'noob') {
+        if (toggleTurn(move) === 'X' && kiibot === 'noob') {
             let noobChoice = Math.floor(Math.random() * 9);
             while (createGameboard.gameboard[noobChoice] != undefined && move < 10) {
                 noobChoice = Math.floor(Math.random() * 9);
             };
             setTimeout(updateGameboard, 1000, noobChoice);
-        } else if (toggleTurn(move) == 'X' && kiibot === 'pro') {
+        } else if (toggleTurn(move) === 'X' && kiibot === 'pro') {
+            console.log(toggleTurn(move))
             let bestScore = -Infinity;
             let nextMove;
             for (let i = 0; i < 9; i++) {
                 if (createGameboard.gameboard[i] === undefined) {
                     createGameboard.gameboard[i] = 'X';
-                    let proChoice = minimax(createGameboard.gameboard);
+                    let score = minimax(createGameboard.gameboard, false);
                     createGameboard.gameboard[i] = undefined;
-                    if (proChoice > bestScore) {
-                        bestScore = proChoice;
+                    if (score > bestScore) {
+                        bestScore = score;
                         nextMove = i;
-                    }
+                    };
                 };
-            }
-           setTimeout(updateGameboard, 1000, nextMove);
-        } else if (toggleTurn(move) == 'O') {
+            };
+            updateGameboard(nextMove);
+        } else if (toggleTurn(move) === 'O') {
             for (let cell of createGameboard.board) {
                 cell.addEventListener('click', function () {
                     if (cell.textContent == "") {
@@ -193,9 +197,36 @@ const displayController = (() => {
         };
     };
 
-    function minimax(gameboard) {
-        return 1;
-    }
+    function minimax(gameboard, isMaximizing) {
+        let result = createGameboard.checkWinner(gameboard, true);
+        if (result !== false) {
+            return minimaxScores[result];
+        } else {
+            if (isMaximizing) {
+                let bestScore = -Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (gameboard[i] === undefined) {
+                        gameboard[i] = 'X';
+                        let score = minimax(gameboard, false);
+                        gameboard[i] = undefined;
+                        bestScore = Math.max(score, bestScore);
+                    };
+                };
+                return bestScore 
+            } else {
+                let bestScore = Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (gameboard[i] === undefined) {
+                        gameboard[i] = 'O';
+                        let score = minimax(gameboard, true);
+                        gameboard[i] = undefined;
+                        bestScore = Math.min(score, bestScore);
+                    };
+                };
+                return bestScore
+            };
+        };
+    };
 
     function restartPlay() {
         createGameboard.gameboard = [];
@@ -209,23 +240,26 @@ const displayController = (() => {
     function goHome() {
         homeLayout.toggleAttribute('hidden');
         gameLayout.toggleAttribute('hidden');
+        kiibot = 'noob';
         restartPlay();
-    }; 
-
-    const isWinner = () => {
-        const markerWinner = toggleTurn(move - 1);
-        markerWinner == player1.marker ? gotWinner(player1) : gotWinner(player2);
     };
 
     const gotWinner = (winner) => {
-        winner == player1 ? scorePlayer1++ : scorePlayer2++;
+        if (winner == 'O') {
+            scorePlayer1++;
+            message.innerText = `¡${player1.name} gana!`
+        } else if (winner == 'X') {
+            scorePlayer2++;
+            message.innerText = `¡${player2.name} gana!`
+        } else {
+            scoreTie++;
+            message.innerText = `¡Empate!`;
+        };
         createGameboard.gameboard = [];
         move = 1;
-        message.innerText = `¡${winner.name} gana!`
         message.style.padding = "70px 31%";
         message.style.display = 'block';
         setTimeout(render, 2000);
     }; 
-
-    return { move, isWinner, updateGameboard }
+    return { gotWinner, updateGameboard }
 })();
