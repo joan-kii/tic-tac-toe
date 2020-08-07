@@ -155,7 +155,7 @@ const displayController = (() => {
             createGameboard.checkWinner(createGameboard.gameboard, false);
         };
         if (modeAI) {
-            setTimeout(kiibotMode, 500);
+            setTimeout(kiibotMode, 300);
         };
     };
 
@@ -169,7 +169,7 @@ const displayController = (() => {
             while (createGameboard.gameboard[noobChoice] != undefined && move < 10) {
                 noobChoice = Math.floor(Math.random() * 9);
             };
-            setTimeout(updateGameboard, 1000, noobChoice);
+            setTimeout(updateGameboard, 500, noobChoice);
         } else if (toggleTurn(move) === 'X' && kiibot === 'pro') {
             console.log(toggleTurn(move))
             let bestScore = -Infinity;
@@ -257,7 +257,6 @@ const displayController = (() => {
         };
         createGameboard.gameboard = [];
         move = 1;
-        message.style.padding = "70px 31%";
         message.style.display = 'block';
         setTimeout(render, 2000);
     }; 
