@@ -1,7 +1,9 @@
-Ejercicio Tic, Tac, Toe (3 en Raya) de The Odin Project. 
+## [Live Demo](https://joan-kii.github.io/tic-tac-toe/)
 
-Para 1 o 2 jugadores. 
+## Overview
+This is an exercise for The Odin Project's JavaScript path. A Tic, Tac, Toe web app game.
 
-2 modos de juego contra kiiBOT: "Noob" y "Pro"(invencible).
-
-Puedes probarlo [aquí](https://joan-kii.github.io/tic-tac-toe/).
+## Built with
+  - HTML
+  - CSS
+  - JavaScript
